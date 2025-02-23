@@ -1,0 +1,9 @@
+variable "rg" {}
+variable "location" {}
+variable "server_name" {}
+variable "admin_username" {}
+variable "admin_password" {}
+variable "sku" {}
+variable "db_name" {}
+variable "charset" {}
+variable "collation" {}
