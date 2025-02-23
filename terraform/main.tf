@@ -136,8 +136,8 @@ module "vmss_frontend" {
     cd /home/ubuntu
     mkdir nodeapp
     # Checking out from Version Control
-    git clone https://github.com/mmdcloud/carshub-gcp-managed-instance-groups
-    cd carshub-gcp-managed-instance-groups/frontend
+    git clone https://github.com/mmdcloud/carshub-azure-vmss
+    cd carshub-azure-vmss/frontend
     cp -r . /home/ubuntu/nodeapp/
     cd /home/ubuntu/nodeapp/
     # Setting up env variables
@@ -209,8 +209,8 @@ module "vmss_backend" {
     npm install -g @nestjs/cli
     mkdir nodeapp
     # Checking out from Version Control
-    git clone https://github.com/mmdcloud/carshub-gcp-managed-instance-groups
-    cd carshub-gcp-managed-instance-groups/backend/api
+    git clone https://github.com/mmdcloud/carshub-azure-vmss
+    cd carshub-azure-vmss/backend/api
     cp -r . ../nodeapp/
     cd ../nodeapp/
     # Copying Nginx config
