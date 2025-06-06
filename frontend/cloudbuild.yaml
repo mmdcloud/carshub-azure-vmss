@@ -1,11 +1,17 @@
 steps:
-  # Step 1: Set up Docker image build and push to Google Artifact Registry (GCR)
+  # Step 1: Set up Docker image build and push to Google Artifact Registry
+  - name: 'bash'
+    script: |
+      cat > .env << EOL
+        BASE_URL=${_BACKEND_IP_ADDRESS}
+        CDN_URL=${_CDN_IP_ADDRESS}
+      EOL
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "build",
         "-t",
-        "us-central1-docker.pkg.dev/carshub-447206/carshub-frontend/carshub-frontend:$COMMIT_SHA",
+        "us-central1-docker.pkg.dev/${_PROJECT_ID}/carshub-frontend/carshub-frontend:$COMMIT_SHA",
         "frontend/.",
       ]
 
@@ -14,7 +20,7 @@ steps:
     args:
       [
         "push",
-        "us-central1-docker.pkg.dev/carshub-447206/carshub-frontend/carshub-frontend:$COMMIT_SHA",
+        "us-central1-docker.pkg.dev/${_PROJECT_ID}/carshub-frontend/carshub-frontend:$COMMIT_SHA",
       ]
 
   # Step 3: Deploy the Docker image to Cloud Run
@@ -23,17 +29,19 @@ steps:
       - "gcloud"
       - "run"
       - "deploy"
-      - "carshub-frontend-app"
+      - "carshub-frontend-service"
       - "--image"
-      - "us-central1-docker.pkg.dev/carshub-447206/carshub-frontend/carshub-frontend:$COMMIT_SHA"
+      - "us-central1-docker.pkg.dev/${_PROJECT_ID}/carshub-frontend/carshub-frontend:$COMMIT_SHA"
       - "--region"
       - "us-central1"
       - "--platform"
       - "managed"
+      - "--port"
+      - "3000"
       - "--allow-unauthenticated"
 
 images:
-  - "us-central1-docker.pkg.dev/carshub-447206/carshub-frontend/carshub-frontend:$COMMIT_SHA"
+  - "us-central1-docker.pkg.dev/${_PROJECT_ID}/carshub-frontend/carshub-frontend:$COMMIT_SHA"
 
 options:
   logging: CLOUD_LOGGING_ONLY
