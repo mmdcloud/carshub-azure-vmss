@@ -13,8 +13,8 @@ sudo npm i -g pm2
 cd /home/ubuntu
 mkdir nodeapp
 # Checking out from Version Control
-git clone https://github.com/mmdcloud/carshub-gcp-managed-instance-groups
-cd carshub-gcp-managed-instance-groups/frontend
+git clone https://github.com/mmdcloud/carshub-azure-vmss
+cd carshub-azure-vmss/src/frontend
 cp -r . /home/ubuntu/nodeapp/
 cd /home/ubuntu/nodeapp/
 # Setting up env variables
